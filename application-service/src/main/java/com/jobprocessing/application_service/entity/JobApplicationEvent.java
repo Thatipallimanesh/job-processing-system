@@ -2,10 +2,12 @@ package com.jobprocessing.application_service.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class ApplicationEvent {
+@NoArgsConstructor
+public class JobApplicationEvent {
     private Long jobId;
     private String candidateName;
     private String candidateEmail;

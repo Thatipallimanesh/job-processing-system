@@ -1,8 +1,13 @@
 package com.jobprocessing.application_service.service;
 
+import com.jobprocessing.application_service.Outbox.OutboxStatus;
 import com.jobprocessing.application_service.entity.Application;
-import com.jobprocessing.application_service.entity.ApplicationEvent;
+import com.jobprocessing.application_service.entity.JobApplicationEvent;
+import com.jobprocessing.application_service.Outbox.OutboxEvent;
 import com.jobprocessing.application_service.repository.ApplicationRepository;
+import com.jobprocessing.application_service.Outbox.OutboxRepository;
+import com.jobprocessing.application_service.utils.JsonUtil;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,11 +18,13 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class ApplicationService {
     private final JobClient jobClient;
-    private final KafkaProducerService kafkaProducerService;
     private final FileStorageService fileStorageService;
+    private final JsonUtil jsonUtil;
 
     private final ApplicationRepository applicationRepository;
+    private final OutboxRepository outboxRepository;
 
+    @Transactional
     public String apply(Long jobId, String candidateName, String candidateEmail, MultipartFile resume) {
         jobClient.validateJobId(jobId);
 
@@ -31,8 +38,14 @@ public class ApplicationService {
         application.setCreatedAt(LocalDateTime.now());
         applicationRepository.save(application);
 
-        ApplicationEvent event = new ApplicationEvent(jobId, candidateName, candidateEmail, resumeLink);
-        kafkaProducerService.sendApplication(event);
+        JobApplicationEvent event = new JobApplicationEvent(jobId, candidateName, candidateEmail, resumeLink);
+
+        OutboxEvent outboxEvent = new OutboxEvent();
+        outboxEvent.setEventType("JOB_APPLICATION");
+        outboxEvent.setPayload(jsonUtil.convertToJson(event));
+        outboxEvent.setStatus(OutboxStatus.PENDING);
+        outboxEvent.setCreatedAt(LocalDateTime.now());
+        outboxRepository.save(outboxEvent);
 
         return "Application submitted successfully!";
     }
