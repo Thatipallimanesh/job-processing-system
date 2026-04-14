@@ -2,11 +2,11 @@ package com.jobprocessing.application_service.service;
 
 import com.jobprocessing.application_service.Outbox.OutboxStatus;
 import com.jobprocessing.application_service.entity.Application;
-import com.jobprocessing.application_service.entity.JobApplicationEvent;
 import com.jobprocessing.application_service.Outbox.OutboxEvent;
 import com.jobprocessing.application_service.repository.ApplicationRepository;
 import com.jobprocessing.application_service.Outbox.OutboxRepository;
 import com.jobprocessing.application_service.utils.JsonUtil;
+import com.jobprocessing.common_lib.event.JobApplicationEvent;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

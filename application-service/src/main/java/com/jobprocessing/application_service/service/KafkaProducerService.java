@@ -1,6 +1,6 @@
 package com.jobprocessing.application_service.service;
 
-import com.jobprocessing.application_service.entity.JobApplicationEvent;
+import com.jobprocessing.common_lib.event.JobApplicationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;

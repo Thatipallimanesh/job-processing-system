@@ -1,4 +1,4 @@
-package com.jobprocessing.application_service.entity;
+package com.jobprocessing.common_lib.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

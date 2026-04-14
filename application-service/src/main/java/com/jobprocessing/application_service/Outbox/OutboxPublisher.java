@@ -1,8 +1,8 @@
 package com.jobprocessing.application_service.Outbox;
 
-import com.jobprocessing.application_service.entity.JobApplicationEvent;
 import com.jobprocessing.application_service.service.KafkaProducerService;
 import com.jobprocessing.application_service.utils.JsonUtil;
+import com.jobprocessing.common_lib.event.JobApplicationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
