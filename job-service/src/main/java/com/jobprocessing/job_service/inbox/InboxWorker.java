@@ -32,8 +32,9 @@ public class InboxWorker {
     }
 
     private void handleInboxEvent(InboxEvent inboxEvent) {
-        inboxEvent.setStatus(InboxStatus.PROCESSING);
-        inboxRepository.save(inboxEvent);
+        // thread-safe update
+        int updated = inboxRepository.markAsProcessing(inboxEvent.getId());
+        if (updated == 0) return;
 
         try {
             JobApplicationEvent event = jsonUtil.convertFromJson(inboxEvent.getPayload(), JobApplicationEvent.class);
