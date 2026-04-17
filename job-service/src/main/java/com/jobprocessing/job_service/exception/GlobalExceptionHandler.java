@@ -2,6 +2,7 @@ package com.jobprocessing.job_service.exception;
 
 import com.jobprocessing.common_lib.dto.ErrorResponse;
 import com.jobprocessing.common_lib.exception.ResourceNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -37,6 +38,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 LocalDateTime.now()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                ex.getMessage(),
+                request.getDescription(false),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @Override
