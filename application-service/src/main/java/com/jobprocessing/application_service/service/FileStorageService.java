@@ -1,5 +1,6 @@
 package com.jobprocessing.application_service.service;
 
+import com.jobprocessing.common_lib.exception.FileStorageException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +25,7 @@ public class FileStorageService {
             Files.write(filePath, file.getBytes());
             return filePath.toString();
         } catch (IOException e) {
-            throw new RuntimeException("File upload failed");
+            throw new FileStorageException("File upload failed");
         }
     }
 }

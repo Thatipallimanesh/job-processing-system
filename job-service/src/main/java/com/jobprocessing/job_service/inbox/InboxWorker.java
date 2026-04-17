@@ -1,6 +1,7 @@
 package com.jobprocessing.job_service.inbox;
 
 import com.jobprocessing.common_lib.event.JobApplicationEvent;
+import com.jobprocessing.common_lib.exception.ResumeParsingException;
 import com.jobprocessing.job_service.service.ApplicationProcessingService;
 import com.jobprocessing.job_service.utils.JsonUtil;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,9 @@ public class InboxWorker {
             JobApplicationEvent event = jsonUtil.convertFromJson(inboxEvent.getPayload(), JobApplicationEvent.class);
             applicationProcessingService.processApplication(event);
             inboxEvent.setStatus(InboxStatus.DONE);
+        } catch (ResumeParsingException e) {
+            // retry is not useful for corrupt files
+            inboxEvent.setStatus(InboxStatus.FAILED);
         } catch (Exception e) {
             int retryCount = inboxEvent.getRetryCount() + 1;
             inboxEvent.setRetryCount(retryCount);

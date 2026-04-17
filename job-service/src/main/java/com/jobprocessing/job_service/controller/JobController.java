@@ -3,6 +3,7 @@ package com.jobprocessing.job_service.controller;
 import com.jobprocessing.job_service.dto.request.JobRequestDto;
 import com.jobprocessing.job_service.dto.response.JobResponseDto;
 import com.jobprocessing.job_service.service.JobService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class JobController {
     private final JobService jobService;
 
     @PostMapping("/create")
-    public ResponseEntity<JobResponseDto> createJob(@RequestBody JobRequestDto jobRequestDto) {
+    public ResponseEntity<JobResponseDto> createJob(@Valid @RequestBody JobRequestDto jobRequestDto) {
         return ResponseEntity.ok(jobService.createJob(jobRequestDto));
     }
 

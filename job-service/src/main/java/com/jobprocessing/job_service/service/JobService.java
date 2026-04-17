@@ -1,5 +1,6 @@
 package com.jobprocessing.job_service.service;
 
+import com.jobprocessing.common_lib.exception.ResourceNotFoundException;
 import com.jobprocessing.job_service.dto.request.JobRequestDto;
 import com.jobprocessing.job_service.dto.response.JobResponseDto;
 import com.jobprocessing.job_service.entity.Job;
@@ -33,7 +34,7 @@ public class JobService {
 
     public JobResponseDto getJobById(Long id) {
         Job job = jobRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Job not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + id));
 
         return JobMapper.toDto(job);
     }

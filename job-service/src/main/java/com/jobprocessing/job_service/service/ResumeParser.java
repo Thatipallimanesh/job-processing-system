@@ -1,5 +1,6 @@
 package com.jobprocessing.job_service.service;
 
+import com.jobprocessing.common_lib.exception.ResumeParsingException;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class ResumeParser {
         try {
             return tika.parseToString(new File(filePath));
         } catch (IOException | TikaException e) {
-            throw new RuntimeException("Failed to parse resume");
+            throw new ResumeParsingException("Failed to parse resume: " + e.getMessage(), e);
         }
     }
 }

@@ -41,10 +41,11 @@ public class ApplicationProcessingService {
             application.setAtsScore(atsScore);
             application.setStatus(ProcessingStatus.COMPLETED);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             application.setStatus(ProcessingStatus.FAILED);
+            throw e;
+        } finally {
+            applicationRepository.save(application);
         }
-        applicationRepository.save(application);
     }
 
     private int calculateAtsScore(String resumeText, List<String> requiredSkills) {
