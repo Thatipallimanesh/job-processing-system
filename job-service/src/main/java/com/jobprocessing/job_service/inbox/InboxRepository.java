@@ -1,8 +1,10 @@
 package com.jobprocessing.job_service.inbox;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +18,7 @@ public interface InboxRepository extends JpaRepository<InboxEvent, Long> {
     List<InboxEvent> findReadyForProcessing();
 
     @Modifying
+    @Transactional
     @Query("UPDATE InboxEvent i SET i.status = 'PROCESSING' WHERE i.id = :id AND i.status = 'PENDING'")
-    int markAsProcessing(Long id);
+    int markAsProcessing(@Param("id") Long id);
 }

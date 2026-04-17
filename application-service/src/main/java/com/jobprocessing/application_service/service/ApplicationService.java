@@ -29,6 +29,8 @@ public class ApplicationService {
     public String apply(Long jobId, String candidateName, String candidateEmail, MultipartFile resume) {
         jobClient.validateJobId(jobId);
 
+        jobClient.validateDuplicateApplication(jobId, candidateEmail);
+
         String resumeLink = fileStorageService.saveResume(resume);
 
         Application application = new Application();
@@ -54,6 +56,6 @@ public class ApplicationService {
         outboxEvent.setCreatedAt(LocalDateTime.now());
         outboxRepository.save(outboxEvent);
 
-        return "Application submitted successfully!";
+        return "Application submitted and is being processed.";
     }
 }

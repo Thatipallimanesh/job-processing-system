@@ -29,4 +29,12 @@ public class JobClient {
             throw new ExternalServiceException("Unexpected Error while validating job");
         }
     }
+
+    public void validateDuplicateApplication(Long jobId, String candidateEmail) {
+        String url = "http://localhost:8080/applications/exists?jobId=" + jobId + "&candidateEmail=" + candidateEmail;
+        Boolean exists = restTemplate.getForEntity(url, Boolean.class).getBody();
+        if(Boolean.TRUE.equals(exists)) {
+            throw new BadRequestException("You have already applied for this job");
+        }
+    }
 }
