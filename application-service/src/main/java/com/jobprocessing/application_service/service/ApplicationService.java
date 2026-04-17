@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +39,13 @@ public class ApplicationService {
         application.setCreatedAt(LocalDateTime.now());
         applicationRepository.save(application);
 
-        JobApplicationEvent event = new JobApplicationEvent(jobId, candidateName, candidateEmail, resumeLink);
+        JobApplicationEvent event = new JobApplicationEvent(
+                UUID.randomUUID().toString(),
+                jobId,
+                candidateName,
+                candidateEmail,
+                resumeLink
+        );
 
         OutboxEvent outboxEvent = new OutboxEvent();
         outboxEvent.setEventType("JOB_APPLICATION");

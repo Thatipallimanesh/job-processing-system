@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobApplicationEvent {
+    private String eventId;
     private Long jobId;
     private String candidateName;
     private String candidateEmail;
