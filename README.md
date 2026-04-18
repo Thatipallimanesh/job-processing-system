@@ -53,7 +53,7 @@ Central entry point using Spring Cloud Gateway
 ## 🔄 Event Flow
 1. Candidate applies (Application Service)
 2. Application stored and event saved to Outbox table
-3. Event published to Kafka by continuous polling Outbox table
+3. Event published to Kafka by continuously polling Outbox table
 4. Job Service consumes event
 5. Event stored in Inbox table
 6. Worker processes application from inbox table asynchronously using ExecutorService
