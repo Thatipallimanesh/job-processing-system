@@ -16,7 +16,7 @@ public class JobClient {
     private final RestTemplate restTemplate;
 
     public void validateJobId(Long jobId) {
-        String url = "http://localhost:8080/jobs/" + jobId;
+        String url = "http://job-service/jobs/" + jobId;
         try {
             restTemplate.getForEntity(url, Object.class);
         } catch (HttpClientErrorException.NotFound e) {
@@ -31,7 +31,7 @@ public class JobClient {
     }
 
     public void validateDuplicateApplication(Long jobId, String candidateEmail) {
-        String url = "http://localhost:8080/applications/exists?jobId=" + jobId + "&candidateEmail=" + candidateEmail;
+        String url = "http://job-service/applications/exists?jobId=" + jobId + "&candidateEmail=" + candidateEmail;
         Boolean exists = restTemplate.getForEntity(url, Boolean.class).getBody();
         if(Boolean.TRUE.equals(exists)) {
             throw new BadRequestException("You have already applied for this job");

@@ -15,6 +15,7 @@
         <module>job-service</module>
         <module>application-service</module>
         <module>common-library</module>
+        <module>eureka-server</module>
     </modules>
 
     <!-- 🔥 Centralized Properties -->
