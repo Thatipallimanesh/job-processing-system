@@ -16,6 +16,7 @@
         <module>application-service</module>
         <module>common-library</module>
         <module>eureka-server</module>
+        <module>api-gateway</module>
     </modules>
 
     <!-- 🔥 Centralized Properties -->

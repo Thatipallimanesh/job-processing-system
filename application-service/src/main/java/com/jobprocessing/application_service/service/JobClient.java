@@ -31,7 +31,7 @@ public class JobClient {
     }
 
     public void validateDuplicateApplication(Long jobId, String candidateEmail) {
-        String url = "http://job-service/applications/exists?jobId=" + jobId + "&candidateEmail=" + candidateEmail;
+        String url = "http://job-service/jobs/exists?jobId=" + jobId + "&candidateEmail=" + candidateEmail;
         Boolean exists = restTemplate.getForEntity(url, Boolean.class).getBody();
         if(Boolean.TRUE.equals(exists)) {
             throw new BadRequestException("You have already applied for this job");

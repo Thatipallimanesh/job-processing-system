@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Validated
-@RequestMapping("/applications")
+@RequestMapping("/jobs")
 public class ApplicationController {
     private final ApplicationService applicationService;
 
